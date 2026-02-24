@@ -1,0 +1,26 @@
+# Large data directories
+Images/
+data/
+FromHipergator/
+Measurements/
+
+# QuPath auto-generated backups
+*.qpproj.backup
+
+# LibreOffice lock files
+.~lock.*#
+
+# Claude Code local settings
+.claude/
+
+# OS/editor artifacts
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/

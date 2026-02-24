@@ -1,0 +1,32 @@
+{
+  "pathClasses": [
+    {
+      "name": "Ignore*",
+      "color": -4934476
+    },
+    {
+      "name": "Follicle",
+      "color": -5954656
+    },
+    {
+      "name": "PALS",
+      "color": -11574528
+    },
+    {
+      "name": "Trabeculae",
+      "color": -8563194
+    },
+    {
+      "name": "LargeVessel",
+      "color": -10053223
+    },
+    {
+      "name": "RedPulp",
+      "color": -10359006
+    },
+    {
+      "name": "SmallVessel",
+      "color": -16711681
+    }
+  ]
+}
