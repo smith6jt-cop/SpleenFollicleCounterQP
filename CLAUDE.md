@@ -37,3 +37,14 @@ Defined in `classifiers/classes.json`: **Follicle**, **PALS** (periarteriolar ly
 ## InstanSeg Cell Detection Channels (26)
 
 DAPI, CD45RO, Ki67, FOXP3, CD38, CD20, CD4, CD44, CD31, CD11c, CD34, CD107a, PDL1, CD163, HLA-DR, CD68, CD8, CD21, CD66, CD141, CD57, CD3e, HLA-A, PD-1, CD45, Podoplanin
+
+## Skills_Registry Submodule
+
+A git submodule at `Skills_Registry/` providing cross-session agent memory and reusable skill templates.
+
+- **Source:** https://github.com/smith6jt-cop/Skills_Registry
+- **Relevant skill categories:**
+  - `plugins/kintsugi/` — 34 microscopy and image analysis skills
+  - `plugins/scientific/` — scientific computing and statistics skills
+- **Commands:** `/advise` (get skill-informed guidance), `/retrospective` (post-session learning capture)
+- **Update submodule:** `git submodule update --remote Skills_Registry`
