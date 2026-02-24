@@ -10,12 +10,15 @@ QuPath (v0.6.0) project for quantitative analysis of multiplex Phenocycler (form
 
 ## Data Architecture
 
-- **Images/** — 9 OME-TIFF multiplex images (~270 GB total, 25-33 channels, 16-bit, ~0.508 µm/pixel). Sample IDs: HDL011, HDL018, HDL021, HDL043, HDL053, HDL055, HDL063, HDL086, HDL172
+- **Images/** — 11 OME-TIFF multiplex images (19-33 channels, 16-bit, ~0.508 µm/pixel). Original 9 samples: HDL011, HDL018, HDL021, HDL043, HDL053, HDL055, HDL063, HDL086, HDL172. New samples from HiperGator: 1901HBMP004 (29ch), HDL073 (19ch)
+- **FromHipergator/** — Raw single-channel TIF files from HiperGator processing (3 directories; `19-002_spleen_CC3-C` skipped)
 - **data/[1-9]/** — QuPath per-image output (data.qpdata, summary.json, server.json, thumbnail.jpg)
 - **Measurements/AllAnnotations.csv** — Primary analysis input (~422K rows). Columns: `Image, Object ID, Object type, Name, Classification, Parent, ROI, Centroid X µm, Centroid Y µm, Area µm², Perimeter µm, Num Detections, Length µm, Circularity, Solidity, Max diameter µm, Min diameter µm`
 - **Groups.xlsx** — Sample metadata/genotype groupings; key column: `rs3184504 (SH2B3)`
 - **classifiers/** — Pixel classifier JSONs (`SpleenRegions2.json`, `SmallVessels2.json`) and class definitions (`classes.json`)
 - **scripts/Workflow.groovy** — QuPath analysis pipeline: region segmentation → vessel detection → shape measurements → InstanSeg cell detection → distance calculations
+- **scripts/convert_to_ome_tiff.py** — Converts single-channel TIF directories into pyramidal OME-TIFF (5 levels, 512x512 tiles, DEFLATE, SubIFDs)
+- **analysis/** — Downstream Python analysis outputs (vessel density notebook, figures, CSVs)
 - **resources/display/** — Channel visualization configs
 
 ## Tissue Region Classes
@@ -28,11 +31,28 @@ Defined in `classifiers/classes.json`: **Follicle**, **PALS** (periarteriolar ly
 - To compute vessel density per region: count SmallVessels per Parent region, normalize by parent region area.
 - Image names in the CSV (e.g., `HDL011_PC33.ome.tiff`) must be mapped to sample IDs in `Groups.xlsx` by extracting the HDL### prefix.
 
+## Sample ID Mapping (FromHipergator)
+
+| HiperGator Directory | ALT ID | HANDEL ID | Output Filename | Channels |
+|---|---|---|---|---|
+| `19-001_SP_CC2-A28` | 1901 | — | `1901HBMP004_PC29.ome.tiff` | 29 |
+| `19-002_spleen_CC2-A_D200210` | 1902 | HDL073 | `HDL073_PC19.ome.tiff` | 19 |
+| `19-002_spleen_CC3-C` | — | — | *skipped* | — |
+
 ## Analysis Stack
 
 - **QuPath** (Groovy scripts) for image processing and segmentation
 - **Python/Jupyter** for downstream data analysis and visualization
-- **Key Python libraries:** pandas, openpyxl (for Groups.xlsx), scipy/statsmodels (statistics), matplotlib/seaborn/plotly (visualization), scikit-learn (clustering for single-cell data)
+- **Key Python libraries:** pandas, openpyxl (for Groups.xlsx), scipy/statsmodels (statistics), matplotlib/seaborn/plotly (visualization), scikit-learn (clustering for single-cell data), tifffile/numpy (OME-TIFF conversion)
+
+## OME-TIFF Format Specification
+
+Target format for all images (matches existing QuPath project files):
+- **Pyramidal OME-TIFF** with SubIFDs (5 levels: 1x, 4x, 8x, 16x, 32x)
+- **Tiles:** 512x512, **Compression:** DEFLATE, **Dtype:** uint16
+- **Pixel size:** 0.5077663810243286 µm, **Axes:** CYX
+- **Channel order:** DAPI first, then alphabetical
+- **Note:** OME-XML µm unit must use XML entity `&#181;m` (not Unicode µ) for tifffile ASCII compatibility
 
 ## InstanSeg Cell Detection Channels (26)
 
