@@ -13,7 +13,6 @@ Usage:
 import argparse
 import sys
 from pathlib import Path
-from uuid import uuid4
 
 import numpy as np
 import tifffile
@@ -42,52 +41,11 @@ def channel_name(path: Path) -> str:
     return name
 
 
-def downsample_2x(img: np.ndarray) -> np.ndarray:
-    """Block-mean 2x downsample, trimming odd dimensions."""
-    h, w = img.shape
-    img = img[: h - h % 2, : w - w % 2]
-    return img.reshape(h // 2, 2, w // 2, 2).mean(axis=(1, 3)).astype(np.uint16)
-
-
-def build_ome_xml(
-    channel_names: list[str],
-    size_y: int,
-    size_x: int,
-    pixel_size: float,
-) -> str:
-    """Build OME-XML metadata string."""
-    uuid = f"urn:uuid:{uuid4()}"
-    channels_xml = "\n".join(
-        f'<Channel ID="Channel:0:{i}" Name="{name}" SamplesPerPixel="1"/>'
-        for i, name in enumerate(channel_names)
-    )
-    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
-<OME xmlns="http://www.openmicroscopy.org/Schemas/OME/2016-06"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     UUID="{uuid}"
-     xsi:schemaLocation="http://www.openmicroscopy.org/Schemas/OME/2016-06
-     http://www.openmicroscopy.org/Schemas/OME/2016-06/ome.xsd">
-  <Image ID="Image:0" Name="default">
-    <Pixels BigEndian="false"
-            DimensionOrder="XYCZT"
-            ID="Pixels:0"
-            Interleaved="false"
-            PhysicalSizeX="{pixel_size}"
-            PhysicalSizeXUnit="&#181;m"
-            PhysicalSizeY="{pixel_size}"
-            PhysicalSizeYUnit="&#181;m"
-            SizeC="{len(channel_names)}"
-            SizeT="1"
-            SizeX="{size_x}"
-            SizeY="{size_y}"
-            SizeZ="1"
-            Type="uint16">
-      {channels_xml}
-      <TiffData/>
-    </Pixels>
-  </Image>
-</OME>"""
-    return xml
+def downsample_2x_cyx(img: np.ndarray) -> np.ndarray:
+    """Block-mean 2x downsample of a 3D (C, Y, X) array, trimming odd dims."""
+    c, h, w = img.shape
+    img = img[:, : h - h % 2, : w - w % 2]
+    return img.reshape(c, h // 2, 2, w // 2, 2).mean(axis=(2, 4)).astype(np.uint16)
 
 
 def convert(input_dir: Path, output_path: Path, pixel_size: float) -> None:
@@ -98,55 +56,54 @@ def convert(input_dir: Path, output_path: Path, pixel_size: float) -> None:
 
     print(f"Found {n_channels} channels: {', '.join(names)}")
 
-    # Read first channel to get dimensions
-    first = tifffile.imread(str(channel_paths[0]))
-    size_y, size_x = first.shape
-    print(f"Image dimensions: {size_y} x {size_x} (Y x X)")
-    del first
+    # Load all channels into a single 3D (C, Y, X) array
+    print("Loading channels ...")
+    layers = []
+    for i, (path, name) in enumerate(zip(channel_paths, names)):
+        print(f"  [{i+1}/{n_channels}] {name}")
+        layers.append(tifffile.imread(str(path)).astype(np.uint16))
+    data = np.stack(layers)
+    del layers
+    print(f"Array shape: {data.shape} (C, Y, X)")
 
-    # Number of sub-resolution levels (4x, 8x, 16x, 32x = 4 SubIFDs)
-    n_subifds = 4
-
-    ome_xml = build_ome_xml(names, size_y, size_x, pixel_size)
+    # OME metadata — tifffile generates correct OME-XML from this
+    metadata = {
+        "axes": "CYX",
+        "Channel": {"Name": names},
+        "PhysicalSizeX": pixel_size,
+        "PhysicalSizeXUnit": "um",
+        "PhysicalSizeY": pixel_size,
+        "PhysicalSizeYUnit": "um",
+    }
 
     print(f"Writing {output_path} ...")
-    with tifffile.TiffWriter(str(output_path), bigtiff=True) as tw:
-        for i, (path, name) in enumerate(zip(channel_paths, names)):
-            print(f"  [{i+1}/{n_channels}] {name} ...", end=" ", flush=True)
-            img = tifffile.imread(str(path)).astype(np.uint16)
+    with tifffile.TiffWriter(str(output_path), ome=True, bigtiff=True) as tw:
+        # Full-resolution 3D array with 4 SubIFD levels
+        tw.write(
+            data,
+            tile=(512, 512),
+            compression="deflate",
+            subifds=4,
+            metadata=metadata,
+        )
 
-            # Write full-resolution page
-            options = dict(
-                tile=(512, 512),
-                compression="deflate",
-                subifds=n_subifds,
-            )
-            # Attach OME-XML description only to the first page
-            if i == 0:
-                options["description"] = ome_xml
-                options["metadata"] = None  # prevent tifffile auto-metadata
+        # Generate and write 4 pyramid sub-levels as SubIFDs
+        # Level 1: 4x (two 2x downsamples from full-res)
+        sub = downsample_2x_cyx(downsample_2x_cyx(data))
+        del data
 
-            tw.write(img, **options)
+        subifd_options = dict(
+            tile=(512, 512),
+            compression="deflate",
+            subfiletype=1,
+        )
 
-            # Generate and write pyramid levels as SubIFDs
-            # Level 1: 4x downsample (2x twice)
-            sub = downsample_2x(downsample_2x(img))
-            del img  # free full-res memory
+        tw.write(sub, **subifd_options)
 
-            subifd_options = dict(
-                tile=(512, 512),
-                compression="deflate",
-                subfiletype=1,
-            )
-
+        # Levels 2-4: each 2x from previous
+        for _ in range(3):
+            sub = downsample_2x_cyx(sub)
             tw.write(sub, **subifd_options)
-
-            # Levels 2-4: each 2x from previous
-            for _ in range(3):
-                sub = downsample_2x(sub)
-                tw.write(sub, **subifd_options)
-
-            print("done")
 
     print(f"Wrote {output_path} ({output_path.stat().st_size / 1e9:.2f} GB)")
 
