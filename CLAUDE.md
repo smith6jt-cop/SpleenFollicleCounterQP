@@ -10,16 +10,19 @@ QuPath (v0.6.0) project for quantitative analysis of multiplex Phenocycler (form
 
 ## Data Architecture
 
-- **Images/** — 11 OME-TIFF multiplex images (19-33 channels, 16-bit, ~0.508 µm/pixel). Original 9 samples: HDL011, HDL018, HDL021, HDL043, HDL053, HDL055, HDL063, HDL086, HDL172. New samples from HiperGator: 1901HBMP004 (29ch), HDL073 (29ch)
+- **Images/** — 9 OME-TIFF multiplex images (19-33 channels, 16-bit, ~0.508 µm/pixel). Original samples on disk: HDL011, HDL043, HDL052, HDL055, HDL063, HDL086. HiperGator samples: 1901HBMP004 (29ch), HDL073_PC19 (19ch, pre-signal-isolation), HDL073_PC29 (29ch, post-signal-isolation)
 - **FromHipergator/** — Raw single-channel TIF files from HiperGator processing (3 directories; `19-002_spleen_CC3-C` skipped)
 - **data/[1-9]/** — QuPath per-image output (data.qpdata, summary.json, server.json, thumbnail.jpg)
 - **Measurements/AllAnnotations.csv** — Primary analysis input (~422K rows). Columns: `Image, Object ID, Object type, Name, Classification, Parent, ROI, Centroid X µm, Centroid Y µm, Area µm², Perimeter µm, Num Detections, Length µm, Circularity, Solidity, Max diameter µm, Min diameter µm`
 - **Groups.xlsx** — Sample metadata/genotype groupings; key column: `rs3184504 (SH2B3)`
 - **classifiers/** — Pixel classifier JSONs (`SpleenRegions2.json`, `SmallVessels2.json`) and class definitions (`classes.json`)
 - **scripts/Workflow.groovy** — QuPath analysis pipeline: region segmentation → vessel detection → shape measurements → InstanSeg cell detection → distance calculations
-- **scripts/convert_to_ome_tiff.py** — Converts single-channel TIF directories into pyramidal OME-TIFF (5 levels, 512x512 tiles, DEFLATE, SubIFDs)
+- **scripts/convert_to_ome_tiff.py** — Converts single-channel TIF directories into Bio-Formats-compatible pyramidal OME-TIFF (6 levels, 512x512 tiles, ADOBE_DEFLATE, big-endian, per-channel IFD+SubIFDs with manual OME-XML)
 - **scripts/process_hdl73_channels.py** — Signal isolation for HDL73: autofluorescence subtraction using matched blank pairs via KINTSUGI `kintsugi.signal` module. Supports `--force` to re-process existing channels.
+- **scripts/FastHierarchyAnnotationsDetections.groovy** — QuPath script for fast hierarchy export with annotations and detections
+- **scripts/FastHierarchyAnnotationsOnly.groovy** — QuPath script for fast hierarchy export with annotations only
 - **analysis/** — Downstream Python analysis outputs (vessel density notebook, figures, CSVs)
+- **classifiers/pixel_classifiers/** — Pixel classifier model JSONs (e.g., `SmallVessel3.json`)
 - **resources/display/** — Channel visualization configs
 
 ## Tissue Region Classes
@@ -34,11 +37,12 @@ Defined in `classifiers/classes.json`: **Follicle**, **PALS** (periarteriolar ly
 
 ## Sample ID Mapping (FromHipergator)
 
-| HiperGator Directory | ALT ID | HANDEL ID | Output Filename | Channels |
-|---|---|---|---|---|
-| `19-001_SP_CC2-A28` | 1901 | — | `1901HBMP004_PC29.ome.tiff` | 29 |
-| `19-002_spleen_CC2-A_D200210` | 1902 | HDL073 | `HDL073_PC29.ome.tiff` | 29 |
-| `19-002_spleen_CC3-C` | — | — | *skipped* | — |
+| HiperGator Directory | ALT ID | HANDEL ID | Output Filename | Channels | Status |
+|---|---|---|---|---|---|
+| `19-001_SP_CC2-A28` | 1901 | — | `1901HBMP004_PC29.ome.tiff` | 29 | Converted (1.74 GB) |
+| `19-002_spleen_CC2-A_D200210` | 1902 | HDL073 | `HDL073_PC19.ome.tiff` | 19 | Converted (2.44 GB) |
+| `HDL73_SPL_Processed/ImageJ` | 1902 | HDL073 | `HDL073_PC29.ome.tiff` | 29 | Signal-isolated (3.30 GB) |
+| `19-002_spleen_CC3-C` | — | — | *skipped* | — | — |
 
 ## Analysis Stack
 
@@ -48,12 +52,14 @@ Defined in `classifiers/classes.json`: **Follicle**, **PALS** (periarteriolar ly
 
 ## OME-TIFF Format Specification
 
-Target format for all images (matches existing QuPath project files):
-- **Pyramidal OME-TIFF** with SubIFDs (5 levels: 1x, 4x, 8x, 16x, 32x)
-- **Tiles:** 512x512, **Compression:** DEFLATE, **Dtype:** uint16
-- **Pixel size:** 0.5077663810243286 µm, **Axes:** CYX
+Target format for all images (Bio-Formats/QuPath compatible):
+- **Pyramidal OME-TIFF** with SubIFDs (6 levels: 1x, 2x, 4x, 8x, 16x, 32x)
+- **Tiles:** 512x512, **Compression:** ADOBE_DEFLATE (code 8), **Dtype:** uint16
+- **Byte order:** big-endian (`byteorder='>'`)
+- **Pixel size:** 0.5077663810243286 µm, **Axes:** CYX (one IFD page per channel)
 - **Channel order:** DAPI first, then alphabetical
-- **Note:** OME-XML µm unit must use XML entity `&#181;m` (not Unicode µ) for tifffile ASCII compatibility
+- **OME-XML:** Manual construction with `BigEndian="true"`, `Interleaved="false"`, `<LightPath/>`, per-channel `<TiffData>` blocks
+- **µm encoding:** Raw UTF-8 µ bytes (`\xc2\xb5`), NOT XML entity `&#181;m`. Pass OME-XML as `bytes` to tifffile to bypass ASCII check.
 
 ## HDL73 Signal Isolation
 

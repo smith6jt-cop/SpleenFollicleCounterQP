@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Convert a directory of single-channel TIF files into a pyramidal OME-TIFF.
 
-Produces a file matching the format used by existing QuPath project images:
-- Pyramidal OME-TIFF with SubIFDs (5 resolution levels: 1x, 4x, 8x, 16x, 32x)
+Produces a Bio-Formats/QuPath-compatible file:
+- Pyramidal OME-TIFF with SubIFDs (6 resolution levels: 1x, 2x, 4x, 8x, 16x, 32x)
 - 512x512 tiles, DEFLATE compression, uint16
-- CYX axis order (one page per channel)
+- CYX axis order (one IFD page per channel)
+- Manual OME-XML with per-channel TiffData blocks for correct channel mapping
 
 Usage:
     python convert_to_ome_tiff.py <input_dir> <output_path> [--pixel-size 0.508]
@@ -13,9 +14,13 @@ Usage:
 import argparse
 import sys
 from pathlib import Path
+from uuid import uuid4
 
 import numpy as np
 import tifffile
+
+
+NUM_SUBIFDS = 5  # 2x, 4x, 8x, 16x, 32x
 
 
 def discover_channels(input_dir: Path) -> list[Path]:
@@ -41,11 +46,68 @@ def channel_name(path: Path) -> str:
     return name
 
 
-def downsample_2x_cyx(img: np.ndarray) -> np.ndarray:
-    """Block-mean 2x downsample of a 3D (C, Y, X) array, trimming odd dims."""
-    c, h, w = img.shape
-    img = img[:, : h - h % 2, : w - w % 2]
-    return img.reshape(c, h // 2, 2, w // 2, 2).mean(axis=(2, 4)).astype(np.uint16)
+def downsample_2x(img: np.ndarray) -> np.ndarray:
+    """Block-mean 2x downsample of a 2D (Y, X) array, trimming odd dims."""
+    h, w = img.shape
+    h2, w2 = h - h % 2, w - w % 2
+    return img[:h2, :w2].reshape(h2 // 2, 2, w2 // 2, 2).mean(axis=(1, 3)).astype(np.uint16)
+
+
+def build_ome_xml(
+    names: list[str],
+    size_y: int,
+    size_x: int,
+    pixel_size: float,
+    filename: str,
+) -> bytes:
+    """Build Bio-Formats-compatible OME-XML with per-channel TiffData blocks.
+
+    Returns UTF-8 bytes (not str) so callers can pass directly to
+    tifffile's ``description`` parameter, bypassing its 7-bit ASCII check.
+    Bio-Formats writes UTF-8 µ in the description tag; we must match that.
+    """
+    n_channels = len(names)
+    image_uuid = f"urn:uuid:{uuid4()}"
+
+    # Channel elements (with LightPath to match Bio-Formats output)
+    channel_elements = []
+    for name in names:
+        channel_elements.append(
+            f'<Channel ID="Channel:0:{len(channel_elements)}" '
+            f'Name="{name}" SamplesPerPixel="1">'
+            f'<LightPath/></Channel>'
+        )
+
+    # TiffData elements — one per channel, each mapping to its IFD page
+    tiffdata_elements = []
+    for c in range(n_channels):
+        tiffdata_elements.append(
+            f'<TiffData FirstC="{c}" FirstT="0" FirstZ="0" '
+            f'IFD="{c}" PlaneCount="1">'
+            f'<UUID FileName="{filename}">{image_uuid}</UUID>'
+            f'</TiffData>'
+        )
+
+    ome_xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<OME xmlns="http://www.openmicroscopy.org/Schemas/OME/2016-06" '
+        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+        f'UUID="{image_uuid}" '
+        'xsi:schemaLocation="http://www.openmicroscopy.org/Schemas/OME/2016-06 '
+        'http://www.openmicroscopy.org/Schemas/OME/2016-06/ome.xsd">'
+        f'<Image ID="Image:0" Name="{filename}">'
+        f'<Pixels BigEndian="true" DimensionOrder="XYCZT" '
+        f'ID="Pixels:0" Interleaved="false" '
+        f'PhysicalSizeX="{pixel_size}" PhysicalSizeXUnit="\u00b5m" '
+        f'PhysicalSizeY="{pixel_size}" PhysicalSizeYUnit="\u00b5m" '
+        f'SizeC="{n_channels}" SizeT="1" SizeX="{size_x}" '
+        f'SizeY="{size_y}" SizeZ="1" Type="uint16">'
+        + "".join(channel_elements)
+        + "".join(tiffdata_elements)
+        + '</Pixels></Image></OME>'
+    )
+    # Return UTF-8 bytes to bypass tifffile's ASCII-only description check
+    return ome_xml.encode('utf-8')
 
 
 def convert(input_dir: Path, output_path: Path, pixel_size: float) -> None:
@@ -56,54 +118,59 @@ def convert(input_dir: Path, output_path: Path, pixel_size: float) -> None:
 
     print(f"Found {n_channels} channels: {', '.join(names)}")
 
-    # Load all channels into a single 3D (C, Y, X) array
-    print("Loading channels ...")
-    layers = []
-    for i, (path, name) in enumerate(zip(channel_paths, names)):
-        print(f"  [{i+1}/{n_channels}] {name}")
-        layers.append(tifffile.imread(str(path)).astype(np.uint16))
-    data = np.stack(layers)
-    del layers
-    print(f"Array shape: {data.shape} (C, Y, X)")
+    # Read first channel to get dimensions
+    first = tifffile.imread(str(channel_paths[0]))
+    size_y, size_x = first.shape
+    del first
+    print(f"Image dimensions: {size_y} x {size_x}")
 
-    # OME metadata — tifffile generates correct OME-XML from this
-    metadata = {
-        "axes": "CYX",
-        "Channel": {"Name": names},
-        "PhysicalSizeX": pixel_size,
-        "PhysicalSizeXUnit": "um",
-        "PhysicalSizeY": pixel_size,
-        "PhysicalSizeYUnit": "um",
-    }
+    # Build OME-XML
+    filename = output_path.name
+    ome_xml = build_ome_xml(names, size_y, size_x, pixel_size, filename)
+
+    # Resolution in pixels per centimeter (matching Bio-Formats convention)
+    resolution_ppcm = 1e4 / pixel_size  # µm/pixel → pixels/cm
+    resolution = (resolution_ppcm, resolution_ppcm)
+
+    # Use ADOBE_DEFLATE (code 8) — Bio-Formats uses this, not DEFLATE (32946)
+    compress = tifffile.COMPRESSION.ADOBE_DEFLATE
+
+    subifd_options = dict(
+        tile=(512, 512),
+        compression=compress,
+        subfiletype=1,
+        metadata=None,
+    )
 
     print(f"Writing {output_path} ...")
-    with tifffile.TiffWriter(str(output_path), ome=True, bigtiff=True) as tw:
-        # Full-resolution 3D array with 4 SubIFD levels
-        tw.write(
-            data,
-            tile=(512, 512),
-            compression="deflate",
-            subifds=4,
-            metadata=metadata,
-        )
+    with tifffile.TiffWriter(str(output_path), bigtiff=True, byteorder=">") as tw:
+        for i, (path, name) in enumerate(zip(channel_paths, names)):
+            print(f"  [{i + 1}/{n_channels}] {name}")
 
-        # Generate and write 4 pyramid sub-levels as SubIFDs
-        # Level 1: 4x (two 2x downsamples from full-res)
-        sub = downsample_2x_cyx(downsample_2x_cyx(data))
-        del data
+            # Load single 2D channel
+            img = tifffile.imread(str(path)).astype(np.uint16)
 
-        subifd_options = dict(
-            tile=(512, 512),
-            compression="deflate",
-            subfiletype=1,
-        )
+            # Write full-resolution page
+            page_kwargs = dict(
+                tile=(512, 512),
+                compression=compress,
+                subifds=NUM_SUBIFDS,
+                metadata=None,
+                resolution=resolution,
+                resolutionunit=3,  # CENTIMETER
+                software="OME Bio-Formats 8.2.0",
+            )
+            if i == 0:
+                page_kwargs["description"] = ome_xml
+            tw.write(img, **page_kwargs)
 
-        tw.write(sub, **subifd_options)
-
-        # Levels 2-4: each 2x from previous
-        for _ in range(3):
-            sub = downsample_2x_cyx(sub)
-            tw.write(sub, **subifd_options)
+            # Write 5 SubIFD pyramid levels (2x, 4x, 8x, 16x, 32x)
+            sub = img
+            del img
+            for _ in range(NUM_SUBIFDS):
+                sub = downsample_2x(sub)
+                tw.write(sub, **subifd_options)
+            del sub
 
     print(f"Wrote {output_path} ({output_path.stat().st_size / 1e9:.2f} GB)")
 
@@ -118,7 +185,7 @@ def main():
         "--pixel-size",
         type=float,
         default=0.5077663810243286,
-        help="Pixel size in µm (default: 0.5077663810243286)",
+        help="Pixel size in \u00b5m (default: 0.5077663810243286)",
     )
     args = parser.parse_args()
 
