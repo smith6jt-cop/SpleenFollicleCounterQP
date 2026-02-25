@@ -1,0 +1,16 @@
+Region,Genotype,N,Mean,SD,Median
+Follicle,C/C,3,236.1,83.5,227.0
+Follicle,C/T,5,168.1,109.1,134.9
+Follicle,T/T,3,185.2,64.0,192.4
+LargeVessel,C/C,3,107.0,179.6,4.7
+LargeVessel,C/T,5,11.9,17.1,4.4
+LargeVessel,T/T,2,10.0,7.1,10.0
+PALS,C/C,3,354.0,138.0,304.4
+PALS,C/T,5,174.5,98.9,138.7
+PALS,T/T,3,165.5,134.3,191.3
+RedPulp,C/C,4,332.5,226.6,343.4
+RedPulp,C/T,5,323.9,97.6,321.3
+RedPulp,T/T,3,294.8,125.3,244.0
+Trabeculae,C/C,3,328.4,479.1,83.4
+Trabeculae,C/T,5,287.8,121.1,352.8
+Trabeculae,T/T,3,288.6,313.6,136.5
