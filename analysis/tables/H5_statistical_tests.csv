@@ -1,0 +1,26 @@
+Test,Metric,Statistic,p,Effect_Size
+Kruskal-Wallis,Per-image median vessel density,2.2272727272727266,0.3283627411166252,
+Mann-Whitney (C/C vs C/T),Per-image median vessel density,10.0,0.22857142857142856,r=-0.667
+Mann-Whitney (C/C vs T/T),Per-image median vessel density,4.0,1.0,r=0.111
+Mann-Whitney (C/T vs T/T),Per-image median vessel density,3.0,0.4,r=0.500
+Spearman dosage,Per-image median vessel density,0.0,1.0,rho=0.000
+Kruskal-Wallis,Log-log regression slope,1.1818181818181799,0.5538235798307594,
+Mann-Whitney (C/C vs C/T),Log-log regression slope,4.0,0.6285714285714286,r=0.333
+Mann-Whitney (C/C vs T/T),Log-log regression slope,7.0,0.4,r=-0.556
+Mann-Whitney (C/T vs T/T),Log-log regression slope,8.0,0.6285714285714286,r=-0.333
+Spearman dosage,Log-log regression slope,-0.22473328748774735,0.5324810907508742,rho=-0.225
+Kruskal-Wallis,Vessel density (Small follicles),1.0636363636363626,0.5875357511358024,
+Mann-Whitney (C/C vs C/T),Vessel density (Small follicles),9.0,0.4,r=-0.500
+Mann-Whitney (C/C vs T/T),Vessel density (Small follicles),6.0,0.7,r=-0.333
+Mann-Whitney (C/T vs T/T),Vessel density (Small follicles),6.0,1.0,r=0.000
+Spearman dosage,Vessel density (Small follicles),-0.2696799449852968,0.4511390079856627,rho=-0.270
+Kruskal-Wallis,Vessel density (Medium follicles),1.1363636363636331,0.5665546020894665,
+Mann-Whitney (C/C vs C/T),Vessel density (Medium follicles),9.0,0.4,r=-0.500
+Mann-Whitney (C/C vs T/T),Vessel density (Medium follicles),4.0,1.0,r=0.111
+Mann-Whitney (C/T vs T/T),Vessel density (Medium follicles),4.0,0.6285714285714286,r=0.333
+Spearman dosage,Vessel density (Medium follicles),0.0,1.0,rho=0.000
+Kruskal-Wallis,Vessel density (Large follicles),1.6181818181818173,0.44526266652814506,
+Mann-Whitney (C/C vs C/T),Vessel density (Large follicles),9.0,0.4,r=-0.500
+Mann-Whitney (C/C vs T/T),Vessel density (Large follicles),7.0,0.4,r=-0.556
+Mann-Whitney (C/T vs T/T),Vessel density (Large follicles),5.0,0.8571428571428571,r=0.167
+Spearman dosage,Vessel density (Large follicles),-0.3146266024828463,0.3759325783116145,rho=-0.315

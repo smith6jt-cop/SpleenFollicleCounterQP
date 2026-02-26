@@ -1,0 +1,61 @@
+Test,Metric,Statistic,p,Effect_Size
+Kruskal-Wallis,Area (µm²) (all regions),1.7999999999999972,0.4065696597405998,
+Mann-Whitney (C/C vs C/T),Area (µm²) (all regions),9.0,0.4,r=-0.500
+Mann-Whitney (C/C vs T/T),Area (µm²) (all regions),6.0,0.7,r=-0.333
+Mann-Whitney (C/T vs T/T),Area (µm²) (all regions),3.0,0.4,r=0.500
+Spearman dosage,Area (µm²) (all regions),-0.1348399724926484,0.710342261945169,rho=-0.135
+Kruskal-Wallis,Area (µm²) (Follicle),2.0909090909090935,0.3515319957864626,
+Mann-Whitney (C/C vs C/T),Area (µm²) (Follicle),10.0,0.22857142857142856,r=-0.667
+Mann-Whitney (C/C vs T/T),Area (µm²) (Follicle),6.0,0.7,r=-0.333
+Mann-Whitney (C/T vs T/T),Area (µm²) (Follicle),4.0,0.6285714285714286,r=0.333
+Spearman dosage,Area (µm²) (Follicle),-0.22473328748774735,0.5324810907508742,rho=-0.225
+Kruskal-Wallis,Circularity (all regions),1.1818181818181799,0.5538235798307594,
+Mann-Whitney (C/C vs C/T),Circularity (all regions),5.0,0.8571428571428571,r=0.167
+Mann-Whitney (C/C vs T/T),Circularity (all regions),6.0,0.7,r=-0.333
+Mann-Whitney (C/T vs T/T),Circularity (all regions),9.0,0.4,r=-0.500
+Spearman dosage,Circularity (all regions),-0.22473328748774735,0.5324810907508742,rho=-0.225
+Kruskal-Wallis,Circularity (Follicle),3.7545454545454504,0.15300682859087733,
+Mann-Whitney (C/C vs C/T),Circularity (Follicle),1.0,0.11428571428571428,r=0.833
+Mann-Whitney (C/C vs T/T),Circularity (Follicle),6.0,0.7,r=-0.333
+Mann-Whitney (C/T vs T/T),Circularity (Follicle),10.0,0.22857142857142856,r=-0.667
+Spearman dosage,Circularity (Follicle),-0.08989331499509894,0.8049397071611515,rho=-0.090
+Kruskal-Wallis,Solidity (all regions),2.527272727272724,0.2826244304398762,
+Mann-Whitney (C/C vs C/T),Solidity (all regions),4.0,0.6285714285714286,r=0.333
+Mann-Whitney (C/C vs T/T),Solidity (all regions),7.0,0.4,r=-0.556
+Mann-Whitney (C/T vs T/T),Solidity (all regions),10.0,0.22857142857142856,r=-0.667
+Spearman dosage,Solidity (all regions),-0.3146266024828463,0.3759325783116145,rho=-0.315
+Kruskal-Wallis,Solidity (Follicle),1.654545454545449,0.4372401347940198,
+Mann-Whitney (C/C vs C/T),Solidity (Follicle),2.0,0.22857142857142856,r=0.667
+Mann-Whitney (C/C vs T/T),Solidity (Follicle),6.0,0.7,r=-0.333
+Mann-Whitney (C/T vs T/T),Solidity (Follicle),8.0,0.6285714285714286,r=-0.333
+Spearman dosage,Solidity (Follicle),-0.04494665749754947,0.9018775739844269,rho=-0.045
+Kruskal-Wallis,Elongation (all regions),0.8909090909090907,0.6405330584613118,
+Mann-Whitney (C/C vs C/T),Elongation (all regions),4.0,0.6285714285714286,r=0.333
+Mann-Whitney (C/C vs T/T),Elongation (all regions),3.0,0.7,r=0.333
+Mann-Whitney (C/T vs T/T),Elongation (all regions),4.0,0.6285714285714286,r=0.333
+Spearman dosage,Elongation (all regions),0.3146266024828463,0.3759325783116145,rho=0.315
+Kruskal-Wallis,Elongation (Follicle),1.1818181818181799,0.5538235798307594,
+Mann-Whitney (C/C vs C/T),Elongation (Follicle),7.0,0.8571428571428571,r=-0.167
+Mann-Whitney (C/C vs T/T),Elongation (Follicle),3.0,0.7,r=0.333
+Mann-Whitney (C/T vs T/T),Elongation (Follicle),3.0,0.4,r=0.500
+Spearman dosage,Elongation (Follicle),0.22473328748774735,0.5324810907508742,rho=0.225
+Kruskal-Wallis,Max diameter (µm) (all regions),2.9272727272727295,0.23139331277227473,
+Mann-Whitney (C/C vs C/T),Max diameter (µm) (all regions),10.0,0.22857142857142856,r=-0.667
+Mann-Whitney (C/C vs T/T),Max diameter (µm) (all regions),4.0,1.0,r=0.111
+Mann-Whitney (C/T vs T/T),Max diameter (µm) (all regions),2.0,0.22857142857142856,r=0.667
+Spearman dosage,Max diameter (µm) (all regions),0.04494665749754947,0.9018775739844269,rho=0.045
+Kruskal-Wallis,Max diameter (µm) (Follicle),3.0727272727272705,0.21516208818386112,
+Mann-Whitney (C/C vs C/T),Max diameter (µm) (Follicle),10.0,0.22857142857142856,r=-0.667
+Mann-Whitney (C/C vs T/T),Max diameter (µm) (Follicle),6.0,0.7,r=-0.333
+Mann-Whitney (C/T vs T/T),Max diameter (µm) (Follicle),2.0,0.22857142857142856,r=0.667
+Spearman dosage,Max diameter (µm) (Follicle),-0.1348399724926484,0.710342261945169,rho=-0.135
+Kruskal-Wallis,Min diameter (µm) (all regions),1.9733231707316998,0.37281924100456604,
+Mann-Whitney (C/C vs C/T),Min diameter (µm) (all regions),9.0,0.4,r=-0.500
+Mann-Whitney (C/C vs T/T),Min diameter (µm) (all regions),4.0,1.0,r=0.111
+Mann-Whitney (C/T vs T/T),Min diameter (µm) (all regions),2.5,0.2845026979112075,r=0.583
+Spearman dosage,Min diameter (µm) (all regions),0.06762522260005742,0.8527444812503713,rho=0.068
+Kruskal-Wallis,Min diameter (µm) (Follicle),3.0727272727272705,0.21516208818386112,
+Mann-Whitney (C/C vs C/T),Min diameter (µm) (Follicle),10.0,0.22857142857142856,r=-0.667
+Mann-Whitney (C/C vs T/T),Min diameter (µm) (Follicle),6.0,0.7,r=-0.333
+Mann-Whitney (C/T vs T/T),Min diameter (µm) (Follicle),2.0,0.22857142857142856,r=0.667
+Spearman dosage,Min diameter (µm) (Follicle),-0.1348399724926484,0.710342261945169,rho=-0.135

@@ -1,0 +1,26 @@
+Test,Metric,Statistic,p,Effect_Size
+Kruskal-Wallis,Follicle count,0.8909090909090907,0.6405330584613118,
+Mann-Whitney (C/C vs C/T),Follicle count,8.0,0.6285714285714286,r=-0.333
+Mann-Whitney (C/C vs T/T),Follicle count,6.0,0.7,r=-0.333
+Mann-Whitney (C/T vs T/T),Follicle count,4.0,0.6285714285714286,r=0.333
+Spearman dosage,Follicle count,-0.1348399724926484,0.710342261945169,rho=-0.135
+Kruskal-Wallis,Total follicle area,0.6999999999999957,0.7046880897187149,
+Mann-Whitney (C/C vs C/T),Total follicle area,6.0,1.0,r=0.000
+Mann-Whitney (C/C vs T/T),Total follicle area,7.0,0.4,r=-0.556
+Mann-Whitney (C/T vs T/T),Total follicle area,7.0,0.8571428571428571,r=-0.167
+Spearman dosage,Total follicle area,-0.2696799449852968,0.4511390079856627,rho=-0.270
+Kruskal-Wallis,Mean follicle area,1.1363636363636331,0.5665546020894665,
+Mann-Whitney (C/C vs C/T),Mean follicle area,3.0,0.4,r=0.500
+Mann-Whitney (C/C vs T/T),Mean follicle area,5.0,1.0,r=-0.111
+Mann-Whitney (C/T vs T/T),Mean follicle area,8.0,0.6285714285714286,r=-0.333
+Spearman dosage,Mean follicle area,0.0,1.0,rho=0.000
+Kruskal-Wallis,Follicle fraction,1.0636363636363626,0.5875357511358024,
+Mann-Whitney (C/C vs C/T),Follicle fraction,6.0,1.0,r=0.000
+Mann-Whitney (C/C vs T/T),Follicle fraction,3.0,0.7,r=0.333
+Mann-Whitney (C/T vs T/T),Follicle fraction,3.0,0.4,r=0.500
+Spearman dosage,Follicle fraction,0.2696799449852968,0.4511390079856627,rho=0.270
+Kruskal-Wallis,Cell density in follicles,4.845454545454537,0.08867943435702326,
+Mann-Whitney (C/C vs C/T),Cell density in follicles,5.0,0.8571428571428571,r=0.167
+Mann-Whitney (C/C vs T/T),Cell density in follicles,8.0,0.2,r=-0.778
+Mann-Whitney (C/T vs T/T),Cell density in follicles,12.0,0.05714285714285714,r=-1.000
+Spearman dosage,Cell density in follicles,-0.5393598899705936,0.10761974177508081,rho=-0.539

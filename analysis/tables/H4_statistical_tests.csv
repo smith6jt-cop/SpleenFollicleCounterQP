@@ -1,0 +1,41 @@
+Test,Metric,Statistic,p,Effect_Size
+Kruskal-Wallis,Follicle fraction,1.0636363636363626,0.5875357511358024,
+Mann-Whitney (C/C vs C/T),Follicle fraction,6.0,1.0,r=0.000
+Mann-Whitney (C/C vs T/T),Follicle fraction,3.0,0.7,r=0.333
+Mann-Whitney (C/T vs T/T),Follicle fraction,3.0,0.4,r=0.500
+Spearman dosage,Follicle fraction,0.2696799449852968,0.4511390079856627,rho=0.270
+Kruskal-Wallis,PALS fraction,3.2545454545454575,0.19646465683747047,
+Mann-Whitney (C/C vs C/T),PALS fraction,8.0,0.6285714285714286,r=-0.333
+Mann-Whitney (C/C vs T/T),PALS fraction,8.0,0.2,r=-0.778
+Mann-Whitney (C/T vs T/T),PALS fraction,10.0,0.22857142857142856,r=-0.667
+Spearman dosage,PALS fraction,-0.5843065474681431,0.07608869333120227,rho=-0.584
+Kruskal-Wallis,RedPulp fraction,0.11818181818181728,0.9426210724370867,
+Mann-Whitney (C/C vs C/T),RedPulp fraction,6.0,1.0,r=0.000
+Mann-Whitney (C/C vs T/T),RedPulp fraction,6.0,0.7,r=-0.333
+Mann-Whitney (C/T vs T/T),RedPulp fraction,5.0,0.8571428571428571,r=0.167
+Spearman dosage,RedPulp fraction,-0.08989331499509894,0.8049397071611515,rho=-0.090
+Kruskal-Wallis,Trabeculae fraction,0.7000000000000028,0.7046880897187124,
+Mann-Whitney (C/C vs C/T),Trabeculae fraction,4.0,0.6285714285714286,r=0.333
+Mann-Whitney (C/C vs T/T),Trabeculae fraction,3.0,0.7,r=0.333
+Mann-Whitney (C/T vs T/T),Trabeculae fraction,5.0,0.8571428571428571,r=0.167
+Spearman dosage,Trabeculae fraction,0.2696799449852968,0.4511390079856627,rho=0.270
+Kruskal-Wallis,WP fraction,0.04545454545453964,0.9775290462529949,
+Mann-Whitney (C/C vs C/T),WP fraction,6.0,1.0,r=0.000
+Mann-Whitney (C/C vs T/T),WP fraction,4.0,1.0,r=0.111
+Mann-Whitney (C/T vs T/T),WP fraction,7.0,0.8571428571428571,r=-0.167
+Spearman dosage,WP fraction,0.0,1.0,rho=0.000
+Kruskal-Wallis,WP/RP ratio,0.04545454545453964,0.9775290462529949,
+Mann-Whitney (C/C vs C/T),WP/RP ratio,6.0,1.0,r=0.000
+Mann-Whitney (C/C vs T/T),WP/RP ratio,4.0,1.0,r=0.111
+Mann-Whitney (C/T vs T/T),WP/RP ratio,7.0,0.8571428571428571,r=-0.167
+Spearman dosage,WP/RP ratio,0.0,1.0,rho=0.000
+Kruskal-Wallis,Follicle/PALS ratio,3.027272727272724,0.22010812774168523,
+Mann-Whitney (C/C vs C/T),Follicle/PALS ratio,5.0,0.8571428571428571,r=0.167
+Mann-Whitney (C/C vs T/T),Follicle/PALS ratio,1.0,0.2,r=0.778
+Mann-Whitney (C/T vs T/T),Follicle/PALS ratio,2.0,0.22857142857142856,r=0.667
+Spearman dosage,Follicle/PALS ratio,0.5393598899705936,0.10761974177508081,rho=0.539
+Kruskal-Wallis,Total area,0.8909090909090907,0.6405330584613118,
+Mann-Whitney (C/C vs C/T),Total area,8.0,0.6285714285714286,r=-0.333
+Mann-Whitney (C/C vs T/T),Total area,6.0,0.7,r=-0.333
+Mann-Whitney (C/T vs T/T),Total area,8.0,0.6285714285714286,r=-0.333
+Spearman dosage,Total area,-0.3146266024828463,0.3759325783116145,rho=-0.315

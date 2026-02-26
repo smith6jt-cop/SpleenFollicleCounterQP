@@ -21,7 +21,16 @@ QuPath (v0.6.0) project for quantitative analysis of multiplex Phenocycler (form
 - **scripts/process_hdl73_channels.py** — Signal isolation for HDL73: autofluorescence subtraction using matched blank pairs via KINTSUGI `kintsugi.signal` module. Supports `--force` to re-process existing channels.
 - **scripts/FastHierarchyAnnotationsDetections.groovy** — QuPath script for fast hierarchy export with annotations and detections
 - **scripts/FastHierarchyAnnotationsOnly.groovy** — QuPath script for fast hierarchy export with annotations only
-- **analysis/** — Downstream Python analysis outputs (vessel density notebook, figures, CSVs)
+- **Measurements/AnnotationsFinal.csv** — Final analysis input (~499K rows, 13 images, 17 columns). Supersedes AllAnnotations.csv with additional images (HDL053, HDL070, HDL073, 1901HBMP004).
+- **analysis/data_utils.py** — Shared analysis module: data loading, genotype mapping, density computation, spatial assignment (cKDTree), statistical tests (Kruskal-Wallis, Mann-Whitney, Spearman dosage), plotting helpers
+- **analysis/H1_vessel_density.ipynb** — Vessel density by region × genotype (raw + RedPulp-normalized)
+- **analysis/H2_vessel_morphology.ipynb** — Vessel morphology (area, circularity, solidity, elongation) by genotype
+- **analysis/H3_follicle_structure.ipynb** — Follicle count, size, fraction by genotype
+- **analysis/H4_tissue_proportions.ipynb** — Tissue region proportions, white pulp metrics by genotype
+- **analysis/H5_follicle_vascularization.ipynb** — Per-follicle vessel assignment via cKDTree, scaling relationships
+- **analysis/figures/** — All hypothesis figures (23 PNGs, 150 DPI)
+- **analysis/tables/** — All hypothesis summary/stats tables (13 CSVs)
+- **analysis/vessel_density_analysis.ipynb** — Legacy vessel density notebook (pre-genotype analysis)
 - **classifiers/pixel_classifiers/** — Pixel classifier model JSONs (e.g., `SmallVessel3.json`)
 - **resources/display/** — Channel visualization configs
 
@@ -31,9 +40,27 @@ Defined in `classifiers/classes.json`: **Follicle**, **PALS** (periarteriolar ly
 
 ## Key Data Relationships
 
-- In `AllAnnotations.csv`, the `Parent` column encodes the annotation hierarchy. SmallVessel annotations are children of region annotations (e.g., `Annotation (Follicle)`, `Annotation (RedPulp)`).
+- In `AnnotationsFinal.csv`, the `Parent` column encodes the annotation hierarchy. SmallVessel annotations are children of region annotations (e.g., `Annotation (Follicle)`, `Annotation (RedPulp)`).
 - To compute vessel density per region: count SmallVessels per Parent region, normalize by parent region area.
 - Image names in the CSV (e.g., `HDL011_PC33.ome.tiff`) must be mapped to sample IDs in `Groups.xlsx` by extracting the HDL### prefix.
+- **ALT ID → Sample mapping:** 1901→1901HBMP004, 1902→HDL073, 1904→HDL070
+
+## Genotype Analysis Framework (rs3184504)
+
+**Excluded samples:** HDL018, HDL021 (user request), HDL172 (no genotype)
+
+| Genotype | Samples (n) |
+|----------|-------------|
+| C/C (3) | HDL011, HDL053, HDL055 |
+| C/T (4) | HDL043, HDL052, HDL070, HDL086 |
+| T/T (3) | 1901HBMP004, HDL063, HDL073 |
+
+**Statistical framework (all notebooks):**
+- Omnibus: Kruskal-Wallis H-test (3 groups)
+- Pairwise: Mann-Whitney U with rank-biserial effect size
+- Gene dosage: Spearman correlation (C/C=0, C/T=1, T/T=2)
+- Unit of analysis: per-image aggregates (NOT individual annotations)
+- All functions in `analysis/data_utils.py`: `compute_density()`, `full_stats_table()`, `run_pairwise()`, `run_dosage_trend()`, `assign_vessels_to_follicles()`
 
 ## Sample ID Mapping (FromHipergator)
 

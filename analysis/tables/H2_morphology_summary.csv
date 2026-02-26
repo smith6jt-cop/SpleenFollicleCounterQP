@@ -1,0 +1,19 @@
+Metric,Genotype,N,Mean,SD,Median
+Area (µm²),C/C,3,58.78,8.25,58.78
+Area (µm²),C/T,4,47.1825,11.1236,46.925
+Area (µm²),T/T,3,55.4333,6.8369,53.89
+Circularity,C/C,3,0.4074,0.017,0.4154
+Circularity,C/T,4,0.4158,0.0099,0.4126
+Circularity,T/T,3,0.328,0.0814,0.2974
+Solidity,C/C,3,0.7958,0.0115,0.8
+Solidity,C/T,4,0.8001,0.0119,0.7994
+Solidity,T/T,3,0.7527,0.0427,0.7412
+Elongation,C/C,3,1.7207,0.0212,1.72
+Elongation,C/T,4,1.732,0.0288,1.7381
+Elongation,T/T,3,1.7507,0.0578,1.7772
+Max diameter (µm),C/C,3,12.7056,0.8531,12.7246
+Max diameter (µm),C/T,4,11.352,0.9999,11.4122
+Max diameter (µm),T/T,3,13.0628,1.394,13.2643
+Min diameter (µm),C/C,3,7.6513,0.5118,7.7205
+Min diameter (µm),C/T,4,6.8648,0.8129,6.7334
+Min diameter (µm),T/T,3,7.7464,0.6668,7.6913

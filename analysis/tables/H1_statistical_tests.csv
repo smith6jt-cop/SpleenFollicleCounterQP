@@ -1,0 +1,41 @@
+Test,Metric,Statistic,p,Effect_Size
+Kruskal-Wallis,Follicle raw,2.0909090909090935,0.3515319957864626,
+Mann-Whitney (C/C vs C/T),Follicle raw,10.0,0.22857142857142856,r=-0.667
+Mann-Whitney (C/C vs T/T),Follicle raw,6.0,0.7,r=-0.333
+Mann-Whitney (C/T vs T/T),Follicle raw,4.0,0.6285714285714286,r=0.333
+Spearman dosage,Follicle raw,-0.22473328748774735,0.5324810907508742,rho=-0.225
+Kruskal-Wallis,Follicle normalized,0.8909090909090835,0.640533058461314,
+Mann-Whitney (C/C vs C/T),Follicle normalized,8.0,0.6285714285714286,r=-0.333
+Mann-Whitney (C/C vs T/T),Follicle normalized,3.0,0.7,r=0.333
+Mann-Whitney (C/T vs T/T),Follicle normalized,4.0,0.6285714285714286,r=0.333
+Spearman dosage,Follicle normalized,0.1348399724926484,0.710342261945169,rho=0.135
+Kruskal-Wallis,PALS raw,3.027272727272724,0.22010812774168523,
+Mann-Whitney (C/C vs C/T),PALS raw,10.0,0.22857142857142856,r=-0.667
+Mann-Whitney (C/C vs T/T),PALS raw,8.0,0.2,r=-0.778
+Mann-Whitney (C/T vs T/T),PALS raw,7.0,0.8571428571428571,r=-0.167
+Spearman dosage,PALS raw,-0.5393598899705936,0.10761974177508081,rho=-0.539
+Kruskal-Wallis,PALS normalized,1.0727272727272705,0.5848711944834923,
+Mann-Whitney (C/C vs C/T),PALS normalized,8.0,0.6285714285714286,r=-0.333
+Mann-Whitney (C/C vs T/T),PALS normalized,7.0,0.4,r=-0.556
+Mann-Whitney (C/T vs T/T),PALS normalized,6.0,1.0,r=0.000
+Spearman dosage,PALS normalized,-0.3146266024828463,0.3759325783116145,rho=-0.315
+Kruskal-Wallis,RedPulp raw,1.472727272727269,0.4788520335130889,
+Mann-Whitney (C/C vs C/T),RedPulp raw,8.0,0.6285714285714286,r=-0.333
+Mann-Whitney (C/C vs T/T),RedPulp raw,7.0,0.4,r=-0.556
+Mann-Whitney (C/T vs T/T),RedPulp raw,8.0,0.6285714285714286,r=-0.333
+Spearman dosage,RedPulp raw,-0.4045199174779453,0.24624961912944973,rho=-0.405
+Kruskal-Wallis,RedPulp normalized,,,
+Mann-Whitney (C/C vs C/T),RedPulp normalized,6.0,1.0,r=0.000
+Mann-Whitney (C/C vs T/T),RedPulp normalized,4.5,1.0,r=0.000
+Mann-Whitney (C/T vs T/T),RedPulp normalized,6.0,1.0,r=0.000
+Spearman dosage,RedPulp normalized,,,
+Kruskal-Wallis,Trabeculae raw,0.48181818181817704,0.7859130697835788,
+Mann-Whitney (C/C vs C/T),Trabeculae raw,4.0,0.6285714285714286,r=0.333
+Mann-Whitney (C/C vs T/T),Trabeculae raw,4.0,1.0,r=0.111
+Mann-Whitney (C/T vs T/T),Trabeculae raw,7.0,0.8571428571428571,r=-0.167
+Spearman dosage,Trabeculae raw,0.08989331499509894,0.8049397071611515,rho=0.090
+Kruskal-Wallis,Trabeculae normalized,1.0636363636363626,0.5875357511358024,
+Mann-Whitney (C/C vs C/T),Trabeculae normalized,4.0,0.6285714285714286,r=0.333
+Mann-Whitney (C/C vs T/T),Trabeculae normalized,2.0,0.4,r=0.556
+Mann-Whitney (C/T vs T/T),Trabeculae normalized,7.0,0.8571428571428571,r=-0.167
+Spearman dosage,Trabeculae normalized,0.2696799449852968,0.4511390079856627,rho=0.270
