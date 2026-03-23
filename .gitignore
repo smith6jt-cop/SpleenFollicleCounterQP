@@ -1,8 +1,14 @@
 # Large data directories
 Images/
 data/
+data_cn/
 FromHipergator/
 Measurements/
+analysis/geojson/
+analysis/figures/*.png
+analysis/masks/
+analysis/tables/
+*.h5ad
 
 # QuPath auto-generated backups
 *.qpproj.backup

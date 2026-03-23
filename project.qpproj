@@ -1,9 +1,9 @@
 {
-  "version": "0.6.0",
+  "version": "0.7.0",
   "createTimestamp": 1771438246012,
   "modifyTimestamp": 1771438246012,
   "uri": "file:/home/smith6jt/SpleenFollicleCounterQP/project.qpproj",
-  "lastID": 19,
+  "lastID": 26,
   "images": [
     {
       "serverBuilder": {
@@ -90,7 +90,7 @@
             },
             {
               "name": "CD31",
-              "color": -16711681
+              "color": -256
             },
             {
               "name": "CD11c",
@@ -98,7 +98,7 @@
             },
             {
               "name": "CD34",
-              "color": -1
+              "color": -65536
             },
             {
               "name": "CD107a",
@@ -210,7 +210,7 @@
         }
       },
       "entryID": 1,
-      "randomizedName": "13126f9e-d190-4263-a994-d2029c1e29db",
+      "randomizedName": "fe32dcf5-3309-4e52-b5df-577cb5b48f26",
       "imageName": "HDL011_PC33.ome.tiff",
       "metadata": {},
       "tags": []
@@ -383,7 +383,7 @@
         }
       },
       "entryID": 2,
-      "randomizedName": "3572a545-477f-480a-a39a-e26eeea6c59d",
+      "randomizedName": "b1cc3e04-c37a-4af2-97bf-c171d6bddb65",
       "imageName": "HDL018_PC25.ome.tiff",
       "metadata": {},
       "tags": []
@@ -556,7 +556,7 @@
         }
       },
       "entryID": 3,
-      "randomizedName": "1781d45e-36ef-4e39-90fa-be279db61309",
+      "randomizedName": "86a73ae9-049b-4c7b-a70b-1829e2d722b2",
       "imageName": "HDL021_PC25.ome.tiff",
       "metadata": {},
       "tags": []
@@ -766,7 +766,7 @@
         }
       },
       "entryID": 4,
-      "randomizedName": "af0a7186-6b4e-4390-a4e0-e564ead6da8f",
+      "randomizedName": "cdf4cf41-4fa6-4d9a-bb38-5732dee66c99",
       "imageName": "HDL043_PC33.ome.tiff",
       "metadata": {},
       "tags": []
@@ -856,7 +856,7 @@
             },
             {
               "name": "CD31",
-              "color": -16711681
+              "color": -256
             },
             {
               "name": "CD11c",
@@ -864,7 +864,7 @@
             },
             {
               "name": "CD34",
-              "color": -1
+              "color": -65536
             },
             {
               "name": "CD107a",
@@ -976,7 +976,7 @@
         }
       },
       "entryID": 5,
-      "randomizedName": "f5f826fb-4333-4cc9-9f3f-43b16a9bd1ac",
+      "randomizedName": "a8859e9a-5fc5-4069-bbc1-0929f38615f9",
       "imageName": "HDL063_PC33.ome.tiff",
       "metadata": {},
       "tags": []
@@ -1186,7 +1186,7 @@
         }
       },
       "entryID": 6,
-      "randomizedName": "2ebeec97-d4bb-4927-8bba-5a054a24f77d",
+      "randomizedName": "5531f45f-d0a9-4b76-839d-a44dc3787001",
       "imageName": "HDL086_PC33.ome.tiff",
       "metadata": {},
       "tags": []
@@ -1266,7 +1266,7 @@
             },
             {
               "name": "CD31",
-              "color": -16711681
+              "color": -256
             },
             {
               "name": "CD11c",
@@ -1274,7 +1274,7 @@
             },
             {
               "name": "CD34",
-              "color": -1
+              "color": -65536
             },
             {
               "name": "CD107a",
@@ -1386,7 +1386,7 @@
         }
       },
       "entryID": 7,
-      "randomizedName": "87c33058-7217-415a-a29f-52280fcab1e1",
+      "randomizedName": "a0f4b1a9-16b0-4702-b522-399f280489d0",
       "imageName": "HDL053_PC33.ome.tif",
       "metadata": {},
       "tags": []
@@ -1596,7 +1596,7 @@
         }
       },
       "entryID": 8,
-      "randomizedName": "33b5f01c-47c2-4862-8572-573fc67da465",
+      "randomizedName": "eb356a0a-5d84-4362-80e9-9562c4b52037",
       "imageName": "HDL055_PC33.ome.tiff",
       "metadata": {},
       "tags": []
@@ -1801,7 +1801,7 @@
         }
       },
       "entryID": 9,
-      "randomizedName": "e632132b-bc00-4228-8e72-d544d7ba3852",
+      "randomizedName": "f1ffeccb-2241-4ecb-b481-098b9dd2af88",
       "imageName": "HDL172_PC33.ome.tiff",
       "metadata": {},
       "tags": []
@@ -1810,7 +1810,7 @@
       "serverBuilder": {
         "builderType": "uri",
         "providerClassName": "qupath.lib.images.servers.bioformats.BioFormatsServerBuilder",
-        "uri": "file:/run/user/1001/gvfs/smb-share:server\u003dpath.ahc.ufl.edu,share\u003dpath$/PERSONAL/smith6jt/Phenocycler/HDL052SPLN_2025Aug6/Scan1/HDL052SPLN_2025Aug6_Scan1.er.qptiff",
+        "uri": "file:/home/smith6jt/SpleenFollicleCounterQP/Images/HDL052SPLN_2025Aug6_Scan1.er.qptiff",
         "args": [
           "--series",
           "0"
@@ -2012,7 +2012,7 @@
         }
       },
       "entryID": 14,
-      "randomizedName": "b2070f99-c001-4f63-b71c-f517d8fbeae2",
+      "randomizedName": "e83807d6-7976-4b30-8e9a-b4d5fb22cb9c",
       "imageName": "HDL052SPLN_2025Aug6_Scan1.er.qptiff - resolution #1",
       "metadata": {},
       "tags": []
@@ -2114,7 +2114,7 @@
             },
             {
               "name": "CD3e",
-              "color": -16776961
+              "color": -65536
             },
             {
               "name": "CD4",
@@ -2170,15 +2170,15 @@
             },
             {
               "name": "PanCK",
-              "color": -1697887
+              "color": -16711936
             },
             {
               "name": "Podoplanin",
-              "color": -8002025
+              "color": -16711936
             },
             {
               "name": "SMActin",
-              "color": -6710887
+              "color": -16776961
             },
             {
               "name": "Vimentin",
@@ -2187,11 +2187,11 @@
           ],
           "pixelCalibration": {
             "pixelWidth": {
-              "value": 0.5077663810243286,
+              "value": 0.374,
               "unit": "µm"
             },
             "pixelHeight": {
-              "value": 0.5077663810243286,
+              "value": 0.374,
               "unit": "µm"
             },
             "zSpacing": {
@@ -2206,7 +2206,7 @@
         }
       },
       "entryID": 16,
-      "randomizedName": "44cc1152-7f9f-4016-b798-48321c4ee8de",
+      "randomizedName": "78a5d972-c404-49c5-9343-671ed78f4a8e",
       "imageName": "1901HBMP004_PC29.ome.tiff",
       "metadata": {},
       "tags": []
@@ -2308,7 +2308,7 @@
             },
             {
               "name": "CD3e",
-              "color": -16776961
+              "color": -65536
             },
             {
               "name": "CD4",
@@ -2364,15 +2364,15 @@
             },
             {
               "name": "PanCK",
-              "color": -1697887
+              "color": -16711936
             },
             {
               "name": "Podoplanin",
-              "color": -8002025
+              "color": -16711936
             },
             {
               "name": "SMActin",
-              "color": -6710887
+              "color": -16776961
             },
             {
               "name": "Vimentin",
@@ -2381,11 +2381,11 @@
           ],
           "pixelCalibration": {
             "pixelWidth": {
-              "value": 0.5077663810243286,
+              "value": 0.374,
               "unit": "µm"
             },
             "pixelHeight": {
-              "value": 0.5077663810243286,
+              "value": 0.374,
               "unit": "µm"
             },
             "zSpacing": {
@@ -2400,7 +2400,7 @@
         }
       },
       "entryID": 18,
-      "randomizedName": "7afc2392-1380-4fa9-87ed-79f261b20d1e",
+      "randomizedName": "f63e08fc-4d09-4a71-b6fa-fa72161a6c80",
       "imageName": "HDL073_PC29.ome.tiff",
       "metadata": {},
       "tags": []
@@ -2478,7 +2478,7 @@
             },
             {
               "name": "CD20",
-              "color": -5952982
+              "color": -16711936
             },
             {
               "name": "CD4",
@@ -2490,7 +2490,7 @@
             },
             {
               "name": "CD31",
-              "color": -65536
+              "color": -16711681
             },
             {
               "name": "CD11c",
@@ -2498,7 +2498,7 @@
             },
             {
               "name": "CD34",
-              "color": -16776961
+              "color": -1
             },
             {
               "name": "CD107a",
@@ -2522,7 +2522,7 @@
             },
             {
               "name": "CD8",
-              "color": -16181
+              "color": -65281
             },
             {
               "name": "CD21",
@@ -2554,7 +2554,7 @@
             },
             {
               "name": "CD3e",
-              "color": -65281
+              "color": -65536
             },
             {
               "name": "HLA-A",
@@ -2611,8 +2611,219 @@
         }
       },
       "entryID": 19,
-      "randomizedName": "414fbb03-823e-4308-b90a-1b1b7e60bb23",
+      "randomizedName": "c7eb2e33-cd55-4ec0-83d4-53af6f90c1ac",
       "imageName": "HDL070_SPLN_2025Aug8_Scan1.er.qptiff - resolution #1",
+      "metadata": {},
+      "tags": []
+    },
+    {
+      "serverBuilder": {
+        "builderType": "uri",
+        "providerClassName": "qupath.lib.images.servers.bioformats.BioFormatsServerBuilder",
+        "uri": "file:/home/smith6jt/SpleenFollicleCounterQP/Images/HDL079_SPLN_2025Aug8_Scan1.er.qptiff",
+        "args": [
+          "--series",
+          "0"
+        ],
+        "metadata": {
+          "name": "HDL079_SPLN_2025Aug8_Scan1.er.qptiff - resolution #1",
+          "width": 30720,
+          "height": 50400,
+          "sizeZ": 1,
+          "sizeT": 1,
+          "channelType": "DEFAULT",
+          "isRGB": false,
+          "pixelType": "UINT16",
+          "levels": [
+            {
+              "downsample": 1.0,
+              "width": 30720,
+              "height": 50400
+            },
+            {
+              "downsample": 2.0,
+              "width": 15360,
+              "height": 25200
+            },
+            {
+              "downsample": 4.0,
+              "width": 7680,
+              "height": 12600
+            },
+            {
+              "downsample": 8.0,
+              "width": 3840,
+              "height": 6300
+            },
+            {
+              "downsample": 16.0,
+              "width": 1920,
+              "height": 3150
+            },
+            {
+              "downsample": 32.0,
+              "width": 960,
+              "height": 1575
+            }
+          ],
+          "channels": [
+            {
+              "name": "DAPI",
+              "color": -16776961
+            },
+            {
+              "name": "CD45RO",
+              "color": -256
+            },
+            {
+              "name": "Ki67",
+              "color": -32768
+            },
+            {
+              "name": "FOXP3",
+              "color": -16711681
+            },
+            {
+              "name": "CD38",
+              "color": -65281
+            },
+            {
+              "name": "CD20",
+              "color": -16711936
+            },
+            {
+              "name": "CD4",
+              "color": -16181
+            },
+            {
+              "name": "CD44",
+              "color": -1
+            },
+            {
+              "name": "CD31",
+              "color": -16711681
+            },
+            {
+              "name": "CD11c",
+              "color": -16711936
+            },
+            {
+              "name": "CD34",
+              "color": -1
+            },
+            {
+              "name": "CD107a",
+              "color": -256
+            },
+            {
+              "name": "PDL1",
+              "color": -32768
+            },
+            {
+              "name": "CD163",
+              "color": -16711681
+            },
+            {
+              "name": "HLA-DR",
+              "color": -65281
+            },
+            {
+              "name": "CD68",
+              "color": -5952982
+            },
+            {
+              "name": "CD8",
+              "color": -65281
+            },
+            {
+              "name": "CD21",
+              "color": -1
+            },
+            {
+              "name": "CD66",
+              "color": -65536
+            },
+            {
+              "name": "CD141",
+              "color": -16711936
+            },
+            {
+              "name": "SMA",
+              "color": -16776961
+            },
+            {
+              "name": "CD57",
+              "color": -256
+            },
+            {
+              "name": "TOX",
+              "color": -32768
+            },
+            {
+              "name": "Vimentin",
+              "color": -16711681
+            },
+            {
+              "name": "CD3e",
+              "color": -65536
+            },
+            {
+              "name": "HLA-A",
+              "color": -5952982
+            },
+            {
+              "name": "PD-1",
+              "color": -16181
+            },
+            {
+              "name": "CD45",
+              "color": -1
+            },
+            {
+              "name": "Collagen IV",
+              "color": -65536
+            },
+            {
+              "name": "E-cadherin",
+              "color": -16711936
+            },
+            {
+              "name": "TCF-1",
+              "color": -16776961
+            },
+            {
+              "name": "Podoplanin",
+              "color": -256
+            },
+            {
+              "name": "ICOS",
+              "color": -32768
+            }
+          ],
+          "pixelCalibration": {
+            "pixelWidth": {
+              "value": 0.5077663810243286,
+              "unit": "µm"
+            },
+            "pixelHeight": {
+              "value": 0.5077663810243286,
+              "unit": "µm"
+            },
+            "zSpacing": {
+              "value": 1.0,
+              "unit": "z-slice"
+            },
+            "timeUnit": "SECONDS",
+            "timepoints": []
+          },
+          "magnification": 20.0,
+          "preferredTileWidth": 512,
+          "preferredTileHeight": 512
+        }
+      },
+      "entryID": 20,
+      "randomizedName": "7dd1115b-a8cc-4aca-9399-9e2550d3d6d7",
+      "imageName": "HDL079_SPLN_2025Aug8_Scan1.er.qptiff - resolution #1",
       "metadata": {},
       "tags": []
     }

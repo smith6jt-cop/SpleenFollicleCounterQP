@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 QuPath (v0.6.0) project for quantitative analysis of multiplex Phenocycler (formerly CODEX) human spleen immunofluorescence images. The project segments tissue regions and small vessels via pixel classifiers, detects cells with InstanSeg deep learning, and exports measurements for downstream statistical analysis.
 
-**Primary analysis goal:** Compare SmallVessel density across tissue regions (Parent column), grouped by genotype from `Groups.xlsx` column `rs3184504 (SH2B3)`. The primary region of interest is **Follicle**.
+**Primary analysis goal:** Compare SmallVessel density across tissue regions (Parent column), grouped by genotype from `Groups.xlsx` column `rs3184504`. The primary region of interest is **Follicle**.
 
 ## Data Architecture
 
@@ -14,13 +14,16 @@ QuPath (v0.6.0) project for quantitative analysis of multiplex Phenocycler (form
 - **FromHipergator/** — Raw single-channel TIF files from HiperGator processing (3 directories; `19-002_spleen_CC3-C` skipped)
 - **data/[1-9]/** — QuPath per-image output (data.qpdata, summary.json, server.json, thumbnail.jpg)
 - **Measurements/AllAnnotations.csv** — Primary analysis input (~422K rows). Columns: `Image, Object ID, Object type, Name, Classification, Parent, ROI, Centroid X µm, Centroid Y µm, Area µm², Perimeter µm, Num Detections, Length µm, Circularity, Solidity, Max diameter µm, Min diameter µm`
-- **Groups.xlsx** — Sample metadata/genotype groupings; key column: `rs3184504 (SH2B3)`
+- **Measurements/ForSH2B3.csv** — CODEX spleen annotations (17.5K rows, 3 images: 2006_CC2B, 2007_CC1A, 2008_CC3A). Uses different region names: Red_Pulp, Sinusoid, Trabecula, Vessel, Peripheral_White_Pulp. Harmonized via `_CODEX_REGION_MAP`/`_CODEX_CLASS_MAP` in data_utils.py.
+- **Measurements/Cells.csv** — Single-cell data (22.6M cells, 11.8GB, 13 images, 71 columns). Columns include 42 marker intensities (`Cell: {marker}: Mean`), 6 signed distances to annotations, cell/nucleus morphology. Used by H11, H14, H15 for single-cell derived features.
+- **Groups.xlsx** — Sample metadata/genotype groupings; key column: `rs3184504`
 - **classifiers/** — Pixel classifier JSONs (`SpleenRegions2.json`, `SmallVessels2.json`) and class definitions (`classes.json`)
 - **scripts/Workflow.groovy** — QuPath analysis pipeline: region segmentation → vessel detection → shape measurements → InstanSeg cell detection → distance calculations
 - **scripts/convert_to_ome_tiff.py** — Converts single-channel TIF directories into Bio-Formats-compatible pyramidal OME-TIFF (6 levels, 512x512 tiles, ADOBE_DEFLATE, big-endian, per-channel IFD+SubIFDs with manual OME-XML)
 - **scripts/process_hdl73_channels.py** — Signal isolation for HDL73: autofluorescence subtraction using matched blank pairs via KINTSUGI `kintsugi.signal` module. Supports `--force` to re-process existing channels.
 - **scripts/FastHierarchyAnnotationsDetections.groovy** — QuPath script for fast hierarchy export with annotations and detections
 - **scripts/FastHierarchyAnnotationsOnly.groovy** — QuPath script for fast hierarchy export with annotations only
+- **scripts/export_regions_geojson.groovy** — Headless QuPath script: exports Follicle + PALS annotations as GeoJSON per image
 - **Measurements/AnnotationsFinal.csv** — Final analysis input (~499K rows, 13 images, 17 columns). Supersedes AllAnnotations.csv with additional images (HDL053, HDL070, HDL073, 1901HBMP004).
 - **analysis/data_utils.py** — Shared analysis module: data loading, genotype mapping, density computation, spatial assignment (cKDTree), statistical tests (Kruskal-Wallis, Mann-Whitney, Spearman dosage), plotting helpers
 - **analysis/H1_vessel_density.ipynb** — Vessel density by region × genotype (raw + RedPulp-normalized)
@@ -28,8 +31,15 @@ QuPath (v0.6.0) project for quantitative analysis of multiplex Phenocycler (form
 - **analysis/H3_follicle_structure.ipynb** — Follicle count, size, fraction by genotype
 - **analysis/H4_tissue_proportions.ipynb** — Tissue region proportions, white pulp metrics by genotype
 - **analysis/H5_follicle_vascularization.ipynb** — Per-follicle vessel assignment via cKDTree, scaling relationships
-- **analysis/figures/** — All hypothesis figures (23 PNGs, 150 DPI)
-- **analysis/tables/** — All hypothesis summary/stats tables (13 CSVs)
+- **analysis/H6_follicle_reconstruction.ipynb** — Follicle reconstruction: GMM area filter, spatial clustering, WP composite nodules, GeoJSON mask visualization
+- **analysis/H7_snp_screen.ipynb** — Multi-SNP screen (15 samples): tests 39 SNPs × 5 metrics, BH FDR, platform sensitivity (All vs Phenocycler-only), concordance analysis
+- **analysis/H11_lda_deconfounded.ipynb** — Platform-deconfounded LDA: 5 approaches (residualization, PC-only, clean features, shrinkage LDA, single-cell), permutation testing, bootstrap CIs
+- **analysis/H14_cell_boundaries.ipynb** — Cell-marker-derived Follicle/PALS boundaries (CD20/CD3e KDE), vessel area fraction + count density + mean size by genotype. See `analysis/H14_cell_boundaries.md` for full documentation.
+- **analysis/H14_cell_boundaries.md** — Comprehensive documentation of H14 analytical pipeline (14 steps)
+- **analysis/H15_single_cell_analysis.ipynb** — Single-cell clustering + phenotyping: 22 markers, arcsinh + z-score → PCA → Harmony batch correction (per-Image) → Leiden → cell-type gating → genotype/region/distance/neighborhood analyses with rs3184504 dosage trend
+- **analysis/geojson/** — QuPath GeoJSON exports (Follicle + PALS annotations per image, pixel coordinates)
+- **analysis/figures/** — All hypothesis figures (PNGs, 150 DPI)
+- **analysis/tables/** — All hypothesis summary/stats tables (CSVs)
 - **analysis/vessel_density_analysis.ipynb** — Legacy vessel density notebook (pre-genotype analysis)
 - **classifiers/pixel_classifiers/** — Pixel classifier model JSONs (e.g., `SmallVessel3.json`)
 - **resources/display/** — Channel visualization configs
@@ -47,20 +57,22 @@ Defined in `classifiers/classes.json`: **Follicle**, **PALS** (periarteriolar ly
 
 ## Genotype Analysis Framework (rs3184504)
 
-**Excluded samples:** HDL018, HDL021 (user request), HDL172 (no genotype)
+**Excluded samples:** HDL018, HDL021 (quality), HDL172 (no genotype)
 
-| Genotype | Samples (n) |
-|----------|-------------|
-| C/C (3) | HDL011, HDL053, HDL055 |
-| C/T (4) | HDL043, HDL052, HDL070, HDL086 |
-| T/T (3) | 1901HBMP004, HDL063, HDL073 |
+| Genotype | Phenocycler Samples | CODEX Samples |
+|----------|-------------------|---------------|
+| C/C (4) | HDL011, HDL053, HDL055 | HDL098 |
+| C/T (8) | HDL018, HDL021, HDL043, HDL052, HDL070, HDL086 | HBMP006, HBMP007 |
+| T/T (3) | HDL063 | 1901HBMP004, HDL073 |
+
+**Platform note:** CODEX samples (5) are smaller tissue sections with different image quality than Phenocycler (10). H7 runs sensitivity analysis across both platforms.
 
 **Statistical framework (all notebooks):**
 - Omnibus: Kruskal-Wallis H-test (3 groups)
 - Pairwise: Mann-Whitney U with rank-biserial effect size
 - Gene dosage: Spearman correlation (C/C=0, C/T=1, T/T=2)
 - Unit of analysis: per-image aggregates (NOT individual annotations)
-- All functions in `analysis/data_utils.py`: `compute_density()`, `full_stats_table()`, `run_pairwise()`, `run_dosage_trend()`, `assign_vessels_to_follicles()`
+- All functions in `analysis/data_utils.py`: `compute_density()`, `full_stats_table()`, `run_pairwise()`, `run_dosage_trend()`, `assign_vessels_to_follicles()`, `residualize_platform()`, `assign_region_by_distance()`, `compute_marker_kde()`, `extract_region_polygons()`, `assign_objects_to_polygons()`, `load_clinical()`
 
 ## Sample ID Mapping (FromHipergator)
 
@@ -75,7 +87,7 @@ Defined in `classifiers/classes.json`: **Follicle**, **PALS** (periarteriolar ly
 
 - **QuPath** (Groovy scripts) for image processing and segmentation
 - **Python/Jupyter** for downstream data analysis and visualization
-- **Key Python libraries:** pandas, openpyxl (for Groups.xlsx), scipy/statsmodels (statistics), matplotlib/seaborn/plotly (visualization), scikit-learn (clustering for single-cell data), tifffile/numpy (OME-TIFF conversion)
+- **Key Python libraries:** pandas, openpyxl (for Groups.xlsx), scipy/statsmodels (statistics), matplotlib/seaborn/plotly (visualization), scikit-learn (clustering for single-cell data), tifffile/numpy (OME-TIFF conversion), scanpy/anndata/harmonypy (single-cell analysis, H15)
 
 ## OME-TIFF Format Specification
 
