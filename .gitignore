@@ -8,6 +8,7 @@ analysis/geojson/
 analysis/figures/*.png
 analysis/masks/
 analysis/tables/
+analysis/*.parquet
 *.h5ad
 
 # QuPath auto-generated backups
