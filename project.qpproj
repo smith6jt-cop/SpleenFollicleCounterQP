@@ -3,7 +3,7 @@
   "createTimestamp": 1771438246012,
   "modifyTimestamp": 1771438246012,
   "uri": "file:/home/smith6jt/SpleenFollicleCounterQP/project.qpproj",
-  "lastID": 26,
+  "lastID": 27,
   "images": [
     {
       "serverBuilder": {
@@ -210,7 +210,7 @@
         }
       },
       "entryID": 1,
-      "randomizedName": "fe32dcf5-3309-4e52-b5df-577cb5b48f26",
+      "randomizedName": "a0c999cc-c2e5-4f96-8ced-30f3d20590f3",
       "imageName": "HDL011_PC33.ome.tiff",
       "metadata": {},
       "tags": []
@@ -383,7 +383,7 @@
         }
       },
       "entryID": 2,
-      "randomizedName": "b1cc3e04-c37a-4af2-97bf-c171d6bddb65",
+      "randomizedName": "e102dc26-b7b4-4c0e-b439-21b783c3c3bf",
       "imageName": "HDL018_PC25.ome.tiff",
       "metadata": {},
       "tags": []
@@ -476,7 +476,7 @@
             },
             {
               "name": "CD34",
-              "color": -65536
+              "color": -1
             },
             {
               "name": "Pan-Cytokeratin",
@@ -484,7 +484,7 @@
             },
             {
               "name": "CD3e",
-              "color": -16711681
+              "color": -65536
             },
             {
               "name": "CD163",
@@ -516,7 +516,7 @@
             },
             {
               "name": "SMA",
-              "color": -16776961
+              "color": -3368500
             },
             {
               "name": "CD4",
@@ -556,7 +556,7 @@
         }
       },
       "entryID": 3,
-      "randomizedName": "86a73ae9-049b-4c7b-a70b-1829e2d722b2",
+      "randomizedName": "3a9c9092-e506-4569-8f7d-1dd89564cbf7",
       "imageName": "HDL021_PC25.ome.tiff",
       "metadata": {},
       "tags": []
@@ -766,7 +766,7 @@
         }
       },
       "entryID": 4,
-      "randomizedName": "cdf4cf41-4fa6-4d9a-bb38-5732dee66c99",
+      "randomizedName": "74e01f1e-9ea0-44be-a8d6-48de60c36af8",
       "imageName": "HDL043_PC33.ome.tiff",
       "metadata": {},
       "tags": []
@@ -976,7 +976,7 @@
         }
       },
       "entryID": 5,
-      "randomizedName": "a8859e9a-5fc5-4069-bbc1-0929f38615f9",
+      "randomizedName": "1c645761-87d9-4d28-8ad0-53456bcd88e0",
       "imageName": "HDL063_PC33.ome.tiff",
       "metadata": {},
       "tags": []
@@ -1186,7 +1186,7 @@
         }
       },
       "entryID": 6,
-      "randomizedName": "5531f45f-d0a9-4b76-839d-a44dc3787001",
+      "randomizedName": "2d235b1d-e374-403f-89de-6bcdc5147545",
       "imageName": "HDL086_PC33.ome.tiff",
       "metadata": {},
       "tags": []
@@ -1386,7 +1386,7 @@
         }
       },
       "entryID": 7,
-      "randomizedName": "a0f4b1a9-16b0-4702-b522-399f280489d0",
+      "randomizedName": "aa0fe8ad-4794-4087-82a7-8aa2592c2154",
       "imageName": "HDL053_PC33.ome.tif",
       "metadata": {},
       "tags": []
@@ -1596,7 +1596,7 @@
         }
       },
       "entryID": 8,
-      "randomizedName": "eb356a0a-5d84-4362-80e9-9562c4b52037",
+      "randomizedName": "b028c1ae-e675-4039-8d5b-6685cf122bc8",
       "imageName": "HDL055_PC33.ome.tiff",
       "metadata": {},
       "tags": []
@@ -1801,7 +1801,7 @@
         }
       },
       "entryID": 9,
-      "randomizedName": "f1ffeccb-2241-4ecb-b481-098b9dd2af88",
+      "randomizedName": "c3ae23f1-6868-48cd-ba10-a9fe77f0f9b5",
       "imageName": "HDL172_PC33.ome.tiff",
       "metadata": {},
       "tags": []
@@ -2012,7 +2012,7 @@
         }
       },
       "entryID": 14,
-      "randomizedName": "e83807d6-7976-4b30-8e9a-b4d5fb22cb9c",
+      "randomizedName": "2dc69586-5076-4af5-a929-51365262c5ad",
       "imageName": "HDL052SPLN_2025Aug6_Scan1.er.qptiff - resolution #1",
       "metadata": {},
       "tags": []
@@ -2206,7 +2206,7 @@
         }
       },
       "entryID": 16,
-      "randomizedName": "78a5d972-c404-49c5-9343-671ed78f4a8e",
+      "randomizedName": "93f34bd8-1434-4350-871f-80e8e802a61a",
       "imageName": "1901HBMP004_PC29.ome.tiff",
       "metadata": {},
       "tags": []
@@ -2400,7 +2400,7 @@
         }
       },
       "entryID": 18,
-      "randomizedName": "f63e08fc-4d09-4a71-b6fa-fa72161a6c80",
+      "randomizedName": "eb3dc74f-78da-4184-b014-a9c4f9cceb5a",
       "imageName": "HDL073_PC29.ome.tiff",
       "metadata": {},
       "tags": []
@@ -2611,7 +2611,7 @@
         }
       },
       "entryID": 19,
-      "randomizedName": "c7eb2e33-cd55-4ec0-83d4-53af6f90c1ac",
+      "randomizedName": "51f19684-a389-4f7e-940c-4d1d18b9b466",
       "imageName": "HDL070_SPLN_2025Aug8_Scan1.er.qptiff - resolution #1",
       "metadata": {},
       "tags": []
@@ -2822,7 +2822,7 @@
         }
       },
       "entryID": 20,
-      "randomizedName": "7dd1115b-a8cc-4aca-9399-9e2550d3d6d7",
+      "randomizedName": "161c99bc-ee64-4b5a-80dc-2e6b13c6d72b",
       "imageName": "HDL079_SPLN_2025Aug8_Scan1.er.qptiff - resolution #1",
       "metadata": {},
       "tags": []
