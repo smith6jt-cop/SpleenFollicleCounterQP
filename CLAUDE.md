@@ -37,6 +37,9 @@ QuPath (v0.6.0) project for quantitative analysis of multiplex Phenocycler (form
 - **analysis/H14_cell_boundaries.ipynb** — Cell-marker-derived Follicle/PALS boundaries (CD20/CD3e KDE), vessel area fraction + count density + mean size by genotype. See `analysis/H14_cell_boundaries.md` for full documentation.
 - **analysis/H14_cell_boundaries.md** — Comprehensive documentation of H14 analytical pipeline (14 steps)
 - **analysis/H15_single_cell_analysis.ipynb** — Single-cell clustering + phenotyping: 22 markers, arcsinh + z-score → PCA → Harmony batch correction (per-Image) → Leiden → cell-type gating → genotype/region/distance/neighborhood analyses with rs3184504 dosage trend
+- **analysis/H16_cell_phenotyping.ipynb** — Cell-type phenotyping (fluorescent cohort): overcluster centroids, signature scores, regional cell-type composition by genotype, neighborhood diversity
+- **analysis/H17_perivascular_phenotyping.ipynb** — Perivascular cell-type enrichment by genotype (boxplots, heatmap, stacked bar, spatial maps)
+- **analysis/H18_HE_follicles.ipynb** — H&E cohort (27 donors, 9/9/9 balanced, separate from fluorescent set): per-donor follicle morphometry by rs3184504 (count, area, density, circularity, NN distance). Null result on first run (closest p=0.064 for area-fraction C/T vs T/T). Uses `Spleen_rs3184504_Genotypes.xlsx` and `27_donor_spleen_measurements1.csv`.
 - **analysis/geojson/** — QuPath GeoJSON exports (Follicle + PALS annotations per image, pixel coordinates)
 - **analysis/figures/** — All hypothesis figures (PNGs, 150 DPI)
 - **analysis/tables/** — All hypothesis summary/stats tables (CSVs)
