@@ -188,21 +188,27 @@ def build_appendix_cells():
 
 def main():
     nb = nbf.read(NB_PATH, as_version=4)
-    # Strip any prior appendix (sentinel match)
-    keep = []
-    skipping = False
+    # Strip prior copy of *this* section only: from SENTINEL up to the next
+    # top-level (## ) markdown header, so later appendices stay intact.
+    keep_before = []
+    in_section = False
+    keep_after = []
     for cell in nb.cells:
-        if cell.cell_type == "markdown" and cell.source.startswith(SENTINEL):
-            skipping = True
+        src = cell.source if isinstance(cell.source, str) else "".join(cell.source)
+        if cell.cell_type == "markdown" and src.startswith(SENTINEL):
+            in_section = True
             continue
-        if skipping:
-            # Stop skipping when we hit something that's clearly not part of the appendix.
-            # Our appendix only adds 3 cells (1 markdown + 2 code) so just drop
-            # the next 2 cells that follow the sentinel and resume.
-            # Simpler: drop everything from the sentinel to the end.
+        if in_section:
+            if cell.cell_type == "markdown" and src.lstrip().startswith("## "):
+                in_section = False
+                keep_after.append(cell)
+                continue
             continue
-        keep.append(cell)
-    nb.cells = keep + build_appendix_cells()
+        if not in_section and not keep_after:
+            keep_before.append(cell)
+        else:
+            keep_after.append(cell)
+    nb.cells = keep_before + build_appendix_cells() + keep_after
     nbf.write(nb, NB_PATH)
     print(f"Wrote {NB_PATH.relative_to(PROJECT)}  ({len(nb.cells)} cells)")
 
