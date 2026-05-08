@@ -40,6 +40,8 @@ QuPath (v0.6.0) project for quantitative analysis of multiplex Phenocycler (form
 - **analysis/H16_cell_phenotyping.ipynb** — Cell-type phenotyping (fluorescent cohort): overcluster centroids, signature scores, regional cell-type composition by genotype, neighborhood diversity
 - **analysis/H17_perivascular_phenotyping.ipynb** — Perivascular cell-type enrichment by genotype (boxplots, heatmap, stacked bar, spatial maps)
 - **analysis/H18_HE_follicles.ipynb** — H&E cohort (27 donors, 9/9/9 balanced, separate from fluorescent set): per-donor follicle morphometry by rs3184504 (count, area, density, circularity, NN distance). Null result on first run (closest p=0.064 for area-fraction C/T vs T/T). Uses `Spleen_rs3184504_Genotypes.xlsx` and `27_donor_spleen_measurements1.csv`.
+- **analysis/H19_meta_analysis.ipynb** — Cross-cohort meta-analysis: pools fluorescent (n=13, `H10_feature_matrix.csv`) + H&E (n=27, `HE_per_donor.csv`) on 4 overlapping follicle metrics. DerSimonian-Laird random-effects on rank-biserial r per pairwise comparison + Stouffer-combined Spearman dosage. Highlights non-additive (heterozygote-dip) pattern in Mean Follicle Area: pooled C/C vs C/T r=+0.41 (p=0.069), C/T vs T/T r=−0.43 (p=0.064). 4 donors overlap both cohorts (HDL055/063/073/086) — sample-level consistency reported separately.
+- **scripts/build_H19_notebook.py** — One-shot builder for H19 (programmatic nbformat construction).
 - **analysis/geojson/** — QuPath GeoJSON exports (Follicle + PALS annotations per image, pixel coordinates)
 - **analysis/figures/** — All hypothesis figures (PNGs, 150 DPI)
 - **analysis/tables/** — All hypothesis summary/stats tables (CSVs)
